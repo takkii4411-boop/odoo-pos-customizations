@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sh_pos_all_in_one_retail.sh_import_pos_menu" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.menu_customer_pos_analysis" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.menu_pos_by_category" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.menu_sh_pos_sector_action" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.menu_sh_pos_section_report_wizard_view" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.sh_pos_inv_summary_menuitem" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.sh_pos_product_profit_menuitem" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.sh_pos_product_indent_menuitem" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.sh_pos_report_user_menuitem" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.sh_tc_pos_top_customer_wizard_menuitem" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.sh_tsp_top_pos_products_main" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.pos_order_day_wise_report" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.menu_customer_pos_analysis" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.sh_payment_pos_report_wizard_menuitem" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.toppings_groups_menu" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.menu_pos_order_line_pivot" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="sh_pos_all_in_one_retail.menu_pos_custom_template_product" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="point_of_sale.menu_pos_combo" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="point_of_sale.menu_report_order_details" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="point_of_sale.menu_report_daily_details" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="l10n_mt_pos.pos_mt_statements_menu" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+
+</odoo>

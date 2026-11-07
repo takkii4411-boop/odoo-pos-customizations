@@ -1,0 +1,96 @@
+<odoo>
+    <data>
+        <record id="partner_view_discount_type_ui" model="ir.ui.view">
+            <field name="name">partner.view.discount.type.ui</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="priority" eval="30"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='category_id']" position="after">
+
+                    <group string="Discount Information" col="2">
+
+                        <field name="senior_pwd_person"/>
+
+                        <field name="general_id_no"
+                               placeholder="ID Number"
+                               invisible="senior_pwd_person in ['naac', 'senior', 'pwd', 'spic', 'medal']"/>
+
+                        <field name="naac_id_no"
+                               placeholder="PNSTM ID No."
+                               invisible="senior_pwd_person != 'naac'"/>
+
+                        <field name="sc_id_no"
+                               placeholder="SC ID No."
+                               invisible="senior_pwd_person != 'senior'"/>
+
+                        <field name="pwd_id_no"
+                               placeholder="PWD ID No."
+                               invisible="senior_pwd_person != 'pwd'"/>
+
+                        <field name="medal_id_no"
+                               placeholder="Medal of Valor ID No."
+                               invisible="senior_pwd_person != 'medal'"/>
+
+                        <field name="spic_id_no"
+                               placeholder="SPIC ID No."
+                               invisible="senior_pwd_person != 'spic'"/>
+
+                        <field name="spic_child_name"
+                               invisible="senior_pwd_person != 'spic'"/>
+
+                        <field name="spic_child_birth_date"
+                               invisible="senior_pwd_person != 'spic'"/>
+
+                        <field name="spic_child_age"
+                               readonly="1"
+                               invisible="senior_pwd_person != 'spic'"/>
+
+                    </group>
+                </xpath>
+
+                <xpath expr="//field[@name='last_name']" position="after">
+                    <!--                    <field name="res_partner_business_style"/>-->
+                    <field name="res_partner_business_style"/>
+                    <field name="special_discount_id"
+                       string="Special Discount"
+                       options="{'no_create': True, 'no_open': True}"/>
+
+                <field name="discount_code"
+                       string="Discount Code"
+                       readonly="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='street']" position="attributes">
+                    <attribute name="required">0</attribute>
+                    <attribute name="placeholder">Address....</attribute>
+                </xpath>
+                <xpath expr="//field[@name='street2']" position="attributes">
+                    <attribute name="required">0</attribute>
+                    <attribute name="placeholder">Address 2....</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_pos_order_tree" model="ir.ui.view">
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="pos_reference" position="before">
+                    <field name="invoice_number"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_account_position_form" model="ir.ui.view">
+            <field name="name">account.fiscal.position.form</field>
+            <field name="model">account.fiscal.position</field>
+            <field name="inherit_id" ref="account.view_account_position_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id' and @groups='base.group_multi_company']" position="after">
+                    <field name="is_zero_exemption_vat"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

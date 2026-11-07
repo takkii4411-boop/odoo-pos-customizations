@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_sc_pwd_hmrc.OrderReceipt"
+       t-inherit="point_of_sale.OrderReceipt"
+       t-inherit-mode="extension">
+
+        <xpath expr="//OrderWidget" position="replace">
+            <t t-foreach="props.data.orderlines" t-as="line" t-key="line_index">
+                <div class="pos-receipt-line d-flex justify-content-between">
+                    <span>
+                        <t t-esc="line.qty"/> x
+                        <t t-esc="line.productName"/> /
+                        <t t-esc="props.formatCurrency(line.sh_model_line.product.lst_price)"/>
+                    </span>
+
+                    <span>
+                        <t t-esc="line.original_price"/>
+                    </span>
+                </div>
+
+                <t t-if="line.vat_removeds and line.senior_pwd_person != 'naac' and line.vat_removeds.length">
+                    <t t-if="line.discount_vat_treatment != 'vat_inclusive'and line.vat_removed_amount != '₱ 0.00'">
+                        <div class="pos-receipt-line d-flex justify-content-between" style="margin-left:1px;">
+                            <span>
+                                Less
+                                <t t-foreach="line.vat_removeds" t-as="vat" t-key="vat">
+                                    <t t-esc="vat"/>
+                                </t>
+                                <t t-if="line.sh_model_line and line.sh_model_line.discount_vat_treatment == 'zero_rated' or line.sh_model_line?.appliedDiscountConfig?.vat_treatment == 'zero_rated'">
+                                    VAT ZR
+                                </t>
+                                <t t-else="">
+                                    VAT
+                                </t>
+                            </span>
+                            <span>
+                                <t t-esc="line.vat_removed_amount"/>
+                            </span>
+                        </div>
+                    </t>
+                </t>
+
+                <!-- SC / PWD Discount -->
+                <t t-if="line.is_sc_line and line.discount_amount != '₱ 0.00'">
+                    <div class="pos-receipt-line d-flex justify-content-between" style="margin-left:1px;">
+                        <span>
+                            <t t-if="line.appliedDiscountText">
+                                <t t-esc="line.appliedDiscountText"/>
+                            </t>
+                            <t t-else="">
+                                Less <t t-esc="line.discount"/> %
+                                <t t-if="line.is_pwd_line_discount">PWD</t>
+                                <t t-elif="line.senior_pwd_person=='naac'">NAAC </t>
+                                <t t-elif="line.senior_pwd_person=='medal'">MV </t>
+                                <t t-elif="line.senior_pwd_person=='spic'">SPIC </t>
+                                <t t-elif="line.senior_pwd_person=='senior'">SC</t>
+                                <t t-else=""/>
+                                Discount
+                            </t>
+                        </span>
+                        <span>
+                            <t t-if="line.discount_amount != 0">
+                                <t t-esc="line.discount_amount"/>
+                            </t>
+                        </span>
+                    </div>
+                </t>
+            </t>
+
+        </xpath>
+    </t>
+    <t t-name="pos_sc_pwd_hmrc.Orderline" t-inherit="point_of_sale.Orderline" t-inherit-mode="extension">
+        <xpath expr="//li[@t-att-class='props.class']" position="inside">
+            <t t-if="line.is_sc_line and !line.is_sc_bnpc_discount">
+                <ul style="margin-left: 10%;">
+                    <t t-if="line.senior_pwd_person != 'naac' and line.vat_removed_amount != '₱ 0.00'">
+                        <t t-if="line.discount_vat_treatment != 'vat_inclusive'">
+                            <li t-if="line.vat_removeds and line.vat_removeds.length" class="d-flex justify-content-between">
+                                <span>
+                                    Less
+                                    <t t-if="line.vat_removeds">
+                                        <t t-foreach="line.vat_removeds" t-as="vat" t-key="index_vat">
+                                            <t t-esc="vat"/>
+                                        </t>
+                                    </t>
+                                    <t t-if="line.sh_model_line and line.sh_model_line.discount_vat_treatment == 'zero_rated' or line.sh_model_line?.appliedDiscountConfig?.vat_treatment == 'zero_rated'">
+                                        VAT ZR
+                                    </t>
+                                    <t t-else="">
+                                        VAT
+                                    </t>
+                                </span>
+                                <span class="fw-bold">
+                                    <t t-esc="line.vat_removed_amount"/>
+                                </span>
+                            </li>
+                        </t>
+                    </t>
+                    <t t-if="line.is_sc_line">
+                        <li t-if=" line.discount_amount != '₱ 0.00'" class="d-flex justify-content-between">
+                            <span>
+                                <t t-if="line.appliedDiscountText">
+                                    <t t-esc="line.appliedDiscountText"/>
+                                </t>
+                                <t t-else="">
+                                    Less <t t-esc="line.discount"/> %
+                                    <t t-if="line.is_pwd_line_discount">PWD</t>
+                                    <t t-elif="line.senior_pwd_person=='naac'">NAAC </t>
+                                    <t t-elif="line.senior_pwd_person=='medal'">MV </t>
+                                    <t t-elif="line.senior_pwd_person=='spic'">SPIC </t>
+                                    <t t-elif="line.senior_pwd_person=='senior'">SC</t>
+                                    <t t-else=""/>
+                                    Discount
+                                </t>
+                            </span>
+                            <span class="fw-bold">
+                                <t t-esc="line.discount_amount"/>
+                            </span>
+                        </li>
+                    </t>
+            </ul>
+        </t>
+
+        <t t-if="line.is_sc_bnpc_discount and line.discount_amount != '₱ 0.00'">
+            <ul style="margin-left: 10%;">
+                <li t-if="line.is_sc_bnpc_discount" class="d-flex justify-content-between">
+                    <span>
+                        <t t-if="line.appliedDiscountText">
+                            <t t-esc="line.appliedDiscountText"/>
+                        </t>
+                        <t t-else="">
+                            Less <t t-esc="line.discount"/>%
+                            <t t-if="line.senior_pwd_person=='pwd'">PWD </t>
+                            <t t-else="">SC </t>
+                            BNPC Discounts
+                        </t>
+                    </span>
+                    <span class="fw-bold">
+                        <t t-if="line.discount_amount != 0">
+                            <t t-esc="line.discount_amount"/>
+                        </t>
+                    </span>
+                </li>
+            </ul>
+        </t>
+        </xpath>
+        <xpath expr="//div[hasclass('product-price')]" position="replace">
+            <t t-if="line.is_sc_line or line.is_sc_bnpc_discount">
+                <t t-esc="line.original_price"/>
+            </t>
+            <t t-else="">
+                <t t-esc="line.price" />
+            </t>
+        </xpath>
+
+        <xpath expr="//li[@t-if=&quot;line.discount !== '0'&quot;]" position="replace"/>
+
+        <xpath expr="//li[@class='sh_orderline_icon']" position="replace">
+            <span class="sh_discount_li_orderline" t-if="env.services.pos.config.sh_apply_both_discount and env.services.pos.get_order() and !env.services.pos.get_order().finalized and env.services.pos.mainScreen.component.name=='ProductScreen'">
+                <span class="product-image-icon sh_orderline_discount_icon me-1 ms-1" t-on-click="() => env.services.pos.get_order().on_click_show_discount()">
+                    <i class="discount_icon fa fa-percent" aria-hidden="true"></i>
+                </span>
+            </span>
+        </xpath>
+
+    </t>
+    <t t-name="pos_sc_pwd_hmrc.TicketScreen" t-inherit="point_of_sale.TicketScreen" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('header-row')]/div[contains(text(), 'Receipt Number')]" position="replace">
+            <div class="col wide p-2">Invoice Number</div>
+        </xpath>
+        <xpath expr="//div[hasclass('order-row')]/div[2]" position="replace">
+            <div class="col wide p-2"><t t-esc="order.invoice_number"/></div>
+        </xpath>
+        <xpath expr="//button[hasclass('highlight') and contains(text(), 'New Order')]" position="replace"></xpath>
+    </t>
+
+    <t t-name="pos_sc_pwd_hmrc.PartnerDetailsEditStreet" t-inherit="point_of_sale.PartnerDetailsEdit" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('partner-details-box')]/t[@t-foreach]" position="replace">
+            <t t-foreach="['Street', 'City', 'Zip', 'Email', 'Phone', 'Mobile', 'Barcode']" t-as="item" t-key="item">
+                <div class="partner-detail col">
+                    <label class="form-label label"
+                           t-attf-for="{{item}}"
+                           t-esc="item === 'Street' ? 'Address' : partnerDetailsFields[item]"/>
+                    <input
+                        class="detail form-control"
+                        t-attf-id="{{item}}"
+                        t-attf-name="{{item}}"
+                        t-model="changes[item.toLowerCase()]"
+                        t-attf-placeholder="{{item === 'Street' ? 'Address' : partnerDetailsFields[item]}}"
+                        t-att="{'disabled': isFieldCommercialAndPartnerIsChild(item)}"
+                        t-att-class="{'border-danger': missingFields.includes(item.toLowerCase())}"/>
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+    <t t-name="PartnerDetailsEdit" t-inherit="point_of_sale.PartnerDetailsEdit" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('partner-details-box')]" position="inside">
+
+             <div class="partner-detail col-12">
+                <label class="form-label" for="res_partner_business_style">Business Style</label>
+                <input class="detail form-control"
+                       type="text"
+                       id="res_partner_business_style"
+                       t-model="changes.res_partner_business_style"
+                       placeholder="Enter business style"/>
+            </div>
+
+            <div class="partner-detail col-12">
+                <label class="form-label" for="senior_pwd_person">Discount Type</label>
+                <select class="detail form-select" id="senior_pwd_person" t-model="changes.senior_pwd_person">
+                    <option value="">None</option>
+                    <t t-foreach="env.services.pos.discountConfigs || []" t-as="discount" t-key="discount.id">
+                        <option t-att-value="discount.discount_code" t-esc="discount.name"/>
+                    </t>
+                </select>
+            </div>
+
+            <!-- Conditional ID Fields (only one shows) -->
+            <div class="partner-detail col-12" t-if="changes.senior_pwd_person === 'naac'">
+                <label class="form-label" for="naac_id_no">PNSTM ID No</label>
+                <input class="detail form-control" type="text" t-model="changes.naac_id_no" placeholder="Enter PNSTM ID No"/>
+            </div>
+
+            <div class="partner-detail col-12" t-if="changes.senior_pwd_person === 'senior'">
+                <label class="form-label" for="sc_id_no">SC ID No.</label>
+                <input class="detail form-control" type="text" t-model="changes.sc_id_no" placeholder="Enter SC ID No."/>
+            </div>
+
+            <div class="partner-detail col-12" t-if="changes.senior_pwd_person === 'pwd'">
+                <label class="form-label" for="pwd_id_no">PWD ID No.</label>
+                <input class="detail form-control" type="text" t-model="changes.pwd_id_no" placeholder="Enter PWD ID No."/>
+            </div>
+
+            <div class="partner-detail col-12" t-if="changes.senior_pwd_person === 'medal'">
+                <label class="form-label" for="medal_id_no">Medal of Valor ID No.</label>
+                <input class="detail form-control" type="text" t-model="changes.medal_id_no" placeholder="Enter Medal of Valor ID No."/>
+            </div>
+
+            <div class="partner-detail col-12" t-if="changes.senior_pwd_person === 'spic'">
+                <label class="form-label" for="spic_id_no">SPIC ID No.</label>
+                <input class="detail form-control" type="text" t-model="changes.spic_id_no" placeholder="Enter SPIC ID No."/>
+
+                <label class="form-label mt-3" for="spic_child_name">Name of Child</label>
+                <input class="detail form-control" type="text" t-model="changes.spic_child_name" placeholder="Enter child's full name"/>
+
+                <label class="form-label mt-3" for="spic_child_birth_date">Child's Birth Date</label>
+                <input
+                    class="detail form-control"
+                    type="date"
+                    t-model="changes.spic_child_birth_date"
+                    t-att-placeholder="changes.spic_child_birth_date ? '' : 'Select child birth date'"
+                    t-on-change="onSpicChildBirthDateChange"
+                />
+
+                <label class="form-label mt-3">Child's Age</label>
+                <div class="form-control bg-light text-center fw-bold">
+                    <t t-if="changes.spic_child_age > 0">
+                        <t t-esc="changes.spic_child_age"/> years old
+                    </t>
+                    <t t-else="">—</t>
+                </div>
+            </div>
+
+            <!-- General ID field for None or new dynamic discount types -->
+            <div class="partner-detail col-12"
+                 t-if="!changes.senior_pwd_person ||
+                       !['senior', 'pwd', 'naac', 'medal', 'spic'].includes(changes.senior_pwd_person)">
+                <label class="form-label" for="general_id_no">ID Number</label>
+                <input class="detail form-control" type="text" t-model="changes.general_id_no" placeholder="Enter ID Number"/>
+            </div>
+
+        </xpath>
+    </t>
+
+    <t t-name="pos_sc_pwd_hmrc.ActionpadWidget" t-inherit="point_of_sale.ActionpadWidget" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('set-partner')]" position="attributes">
+            <attribute name="t-att-disabled">this.isCustomerChangeDisabled</attribute>
+        </xpath>
+    </t>
+</templates>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- First Modal: Discount Type Selection -->
+    <t t-name="pos_sc_pwd_hmrc.DiscountTypeSelectionPopup">
+        <div class="popup discount-type-selection-popup">
+            <header class="title drag-handle">
+                <t t-esc="props.title"/>
+            </header>
+            <main class="body">
+                <div class="discount-type-options d-flex flex-column gap-3 p-3">
+<!--                    <button class="btn btn-lg btn-primary d-flex flex-column align-items-center p-4 discount-type-btn"-->
+<!--                            t-on-click="selectRegularDiscount">-->
+<!--                        <i class="fa fa-percent fa-3x mb-3"></i>-->
+<!--                        <span class="fs-4 fw-bold">Regular Discount</span>-->
+<!--                        <small class="text-light mt-2">Percentage amount discounts</small>-->
+<!--                    </button>-->
+
+                    <button class="btn btn-lg btn-warning d-flex flex-column align-items-center p-4 discount-type-btn"
+                            t-on-click="selectSpecialDiscount">
+                        <i class="fa fa-star fa-3x mb-3"></i>
+                        <span class="fs-4 fw-bold">Special Discounts</span>
+                        <small class="text-muted mt-2">SC, PWD, BNPC, NAAC, Solo Parent, Medal of Valor</small>
+                    </button>
+                </div>
+            </main>
+            <footer class="footer pb-2">
+                <button class="button cancel" t-on-click="cancel">
+                    <t t-esc="props.cancelText"/>
+                </button>
+            </footer>
+        </div>
+    </t>
+
+    <!-- Second Modal: Manager Approval -->
+    <t t-name="pos_sc_pwd_hmrc.ManagerApprovalPopup">
+        <div class="popup manager-approval-popup">
+            <header class="title drag-handle">
+                <t t-esc="props.title"/>
+            </header>
+            <main class="body">
+                <div class="approval-content p-4">
+                    <div class="alert alert-warning mb-3">
+                        <i class="fa fa-exclamation-triangle me-2"></i>
+                        <strong>Authorization Required</strong>
+                    </div>
+                    <p class="mb-3">
+                        <t t-esc="props.body"/>
+                    </p>
+                    <p class="text-muted small">
+                        <i class="fa fa-info-circle me-1"></i>
+                        Special discount mode will apply to the current order only.
+                        The next order will revert to default POS behavior.
+                    </p>
+                </div>
+            </main>
+            <footer class="footer pb-2">
+                <button class="button cancel m-2" t-on-click="cancel">
+                    <t t-esc="props.cancelText"/>
+                </button>
+                <button class="button confirm btn-primary m-2" t-on-click="requestApproval">
+                    <t t-esc="props.confirmText"/>
+                </button>
+            </footer>
+        </div>
+    </t>
+
+</templates>

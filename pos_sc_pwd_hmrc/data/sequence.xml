@@ -1,0 +1,15 @@
+<odoo>
+    <data noupdate="1">
+        <record id="seq_pos_invoice_global" model="ir.sequence">
+            <field name="name">POS Invoice Global Sequence</field>
+            <field name="code">pos.invoice.global</field>
+            <field name="prefix"></field>
+            <field name="padding">8</field>
+            <field name="number_next">1</field>
+            <field name="implementation">standard</field>
+        </record>
+    </data>
+    <data noupdate="0">
+        <function model="pos.config" name="_setup_existing_configs"/>
+    </data>
+</odoo>

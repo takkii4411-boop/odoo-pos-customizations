@@ -1,0 +1,62 @@
+<odoo>
+    <record id="action_e_journal_wizard" model="ir.actions.act_window">
+        <field name="name">E-Journal Report</field>
+        <field name="res_model">e.journal.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <record id="action_e_sales_report_wizard" model="ir.actions.act_window">
+        <field name="name">E-Sales Report</field>
+        <field name="res_model">e.sales.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="e_journal_sales_reports_menu" name="e-Journal/e-Sales Reports" parent="point_of_sale.menu_point_rep"
+              sequence="8"/>
+    <menuitem id="menu_e_journal_report" name="e-Journal Report" action="action_e_journal_wizard"
+              parent="e_journal_sales_reports_menu" sequence="8"/>
+    <menuitem id="menu_e_sales_report" name="e-Sales Report" action="action_e_sales_report_wizard"
+              parent="e_journal_sales_reports_menu" sequence="9"/>
+    <record id="action_pos_audit_trail_wizard" model="ir.actions.act_window">
+        <field name="name">Audit Trail</field>
+        <field name="res_model">pos.audit.trail.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <!--   Backend Reports   -->
+    <menuitem id="menu_pos_backend_reports" name="Backend Report" parent="point_of_sale.menu_point_rep" sequence="9"/>
+    <menuitem id="menu_pos_audit_trail" name="Audit Trail" parent="menu_pos_backend_reports"
+              action="action_pos_audit_trail_wizard" sequence="1"/>
+    <record id="action_pos_annex_report_wizard" model="ir.actions.act_window">
+        <field name="name">Annex E-1 to E-5</field>
+        <field name="res_model">pos.annex.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_pos_annex" name="Annex E-1 to E-5" action="action_pos_annex_report_wizard"
+              parent="menu_pos_backend_reports" sequence="2"/>
+    <record id="action_pos_sales_price_change_report_wizard" model="ir.actions.act_window">
+        <field name="name">Sales Price Change Report</field>
+        <field name="res_model">pos.sales.price.change.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <record id="action_pos_employee_add_remove_report_wizard" model="ir.actions.act_window">
+        <field name="name">Employee Add Remove Report</field>
+        <field name="res_model">pos.employee.add.remove.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <record id="action_pos_product_add_remove_report_wizard" model="ir.actions.act_window">
+        <field name="name">Product Add Remove Report</field>
+        <field name="res_model">pos.product.add.remove.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_pos_audit_log_menu_1" name="Sales Price Change Report"
+              action="action_pos_sales_price_change_report_wizard" parent="menu_pos_backend_reports" sequence="3"/>
+    <menuitem id="menu_pos_audit_log_menu_2" name="Employee Add Remove Report"
+              action="action_pos_employee_add_remove_report_wizard" parent="menu_pos_backend_reports" sequence="4"/>
+    <menuitem id="menu_pos_audit_log_menu_3" name="Product Add Remove Report"
+              action="action_pos_product_add_remove_report_wizard" parent="menu_pos_backend_reports" sequence="5"/>
+</odoo>

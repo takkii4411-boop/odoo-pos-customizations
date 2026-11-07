@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.point_of_sale</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="95"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='pos_inventory_section']" position="inside">
+                <setting id="pos_order_sequence_id" string="Invoice No. Sequence">
+                    <field name="pos_order_sequence_id" readonly="1"/>
+                </setting>
+                <setting id="pos_return_order_sequence_id" string="Return Invoice No. Sequence">
+                    <field name="pos_return_order_sequence_id" readonly="1"/>
+                </setting>
+                <setting id="pos_void_order_sequence_id" string="Void Invoice No. Sequence">
+                    <field name="pos_void_order_sequence_id" readonly="1"/>
+                </setting>
+                <setting id="pos_transaction_sequence_id" string="Transaction Sequence">
+                    <field name="pos_transaction_sequence_id" readonly="1"/>
+                </setting>
+            </xpath>
+            <xpath expr="//block[@id='sh_pos_retail_configurations']" position="inside">
+                <setting id="pos_hide_company_logo" string="Hide Company Logo on Receipts"
+                         help="If enabled, the company logo will be hidden on POS receipts.">
+                    <field name="pos_hide_company_logo"/>
+                </setting>
+            </xpath>
+
+            <!--            setting extra field-->
+
+            <xpath expr="//block[@id='sh_pos_interface_z_report']" position="inside">
+                <setting id="pos_branch" string="Branch Name">
+                    <field name="branch"/>
+                </setting>
+                <setting id="pos_permit_number" string="Permit Number">
+                    <field name="permit_number"/>
+                </setting>
+                <setting id="pos_software_name" string="Software Name">
+                    <field name="software_name"/>
+                </setting>
+                <setting id="pos_software_number" string="Software Version No">
+                    <field name="software_version"/>
+                </setting>
+                <setting id="pos_release_no" string="Release No">
+                    <field name="release_no"/>
+                </setting>
+                <setting id="pos_release_date" string="Release Date">
+                    <field name="date_release"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+
+    <!--    dashbord field-->
+
+    <record id='sh_pos_z_report_inharit_pos_config_views' model='ir.ui.view'>
+        <field name='name'>sh.pos.z.report.pos.config_inharit</field>
+        <field name='model'>pos.config</field>
+        <field name='inherit_id' ref='point_of_sale.pos_config_view_form'/>
+        <field type='xml' name='arch'>
+            <xpath expr="//div[@id='pos_z_report_settings']" position="inside">
+                <div class="row mt16 o_settings_container">
+
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <label string="Branch Name" for="branch_name"/>
+                            <field name="branch_name"/>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <label string="Permit Number" for="permit_no"/>
+                            <field name="permit_no"/>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <label string="Software Name" for="name_software"/>
+                            <field name="name_software"/>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <label string="Software Version" for="version_software"/>
+                            <field name="version_software"/>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <label string="Release No" for="no_release"/>
+                            <field name="no_release"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <label string="Release Date" for="release_date"/>
+                            <field name="release_date"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

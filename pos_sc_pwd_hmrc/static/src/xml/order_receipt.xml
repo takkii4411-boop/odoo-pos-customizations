@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_sc_pwd_hmrc.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+<xpath expr="(//div[contains(@class,'pos-receipt-amount')])[1]/following-sibling::br[1]" position="replace"/>
+        <xpath expr="(//div[contains(@class, 'pos-receipt-amount')])[1]" position="replace">
+            <div class="order-total"
+         style="font-weight:900; color:#000;">
+                TOTAL
+                <span t-esc="props.formatCurrency(props.data.amount_total)"
+              style="font-weight:900; color:#000; float:right;"/>
+    </div>
+</xpath>
+        <xpath expr="//div[@t-if='props.data.footer']" position="replace">
+            <div t-if="props.data.footer" class="pos-receipt-center-align" style="white-space:pre-line;margin-top:32px;">
+                <t t-if="props.data.is_refund_order or props.data.void_invoice_number or props.data.return_invoice_number">
+                    <t t-esc="props.data.footer.split('\n').slice(1).join('\n')"/>
+                </t>
+                <t t-else="">
+                    <t t-esc="props.data.footer"/>
+                </t>
+            </div>
+        </xpath>
+        <xpath expr="(//div[contains(@class, 'receipt-change')])[1]" position="replace">
+            <div class="paymentlines ">
+                CHANGE
+                <span t-esc="props.formatCurrency(props.data.change)" class="pos-receipt-right-align"/>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('paymentlines')]" position="replace">
+            <t t-foreach="props.data.paymentlines_array" t-as="line" t-key="line.name">
+                <div class="paymentlines">
+                    <t t-esc="line.name"/>
+                    <span class="pos-receipt-right-align">
+                        <t t-esc="props.formatCurrency(line.amount)"/>
+            </span>
+        </div>
+    </t>
+</xpath>
+        <xpath expr="//t[@t-if='props.data.rounding_applied']/following-sibling::br[1]" position="replace"/>
+
+        <xpath expr="//div[@class='pos-receipt-order-data']/p[normalize-space()='Powered by Odoo']" position="replace"/>
+        <xpath expr="//div[hasclass('pos-receipt')]//div[hasclass('pos-receipt-taxes')]" position="replace">
+            <div>
+                <div class="my-3">
+                    <div class="d-flex" >
+                        <span class="w-50">VAT Sales</span>
+                        <span class="flex-grow-1 text-end"><t t-esc="props.formatCurrency(props.data.vat_sales)" /></span>
+                    </div>
+                    <!-- <div class="d-flex" style="width: 82%;">
+                        <span class="w-50">Non-VAT Sales</span>
+                        <span class="flex-grow-1 text-end"><t t-esc="props.formatCurrency(props.data.non_vat_sales)" /></span>
+                    </div> -->
+                    <div class="d-flex">
+                        <span class="w-50">VAT-Exempt Sales</span>
+                        <span class="flex-grow-1 text-end"><t t-esc="props.formatCurrency(props.data.vat_exempt_sales)" /></span>
+                    </div>
+                    <div class="d-flex">
+                        <span class="w-50">Zero-Rated Sales</span>
+                        <span class="flex-grow-1 text-end"><t t-esc="props.formatCurrency(props.data.zero_rated_sales)" /></span>
+                    </div>
+                    <div class="d-flex">
+                        <span class="w-50">Total Sales</span>
+                        <span class="flex-grow-1 text-end"><t t-esc="props.formatCurrency(props.data.total_sales)" /></span>
+                    </div>
+                    <br></br>
+                    <div class="d-flex">
+                        <span class="w-50" style="white-space: nowrap;"> VAT Amount (Output VAT)</span>
+                        <span class="flex-grow-1 text-end"><t t-esc="props.formatCurrency(props.data.amount_tax)" /></span>
+                    </div>
+                    <div class="d-flex">
+                        <span class="w-50">Total Amount Due</span>
+                        <span class="flex-grow-1 text-end"><t t-esc="props.formatCurrency(props.data.amount_total)" /></span>
+                    </div>
+                    <div class="d-flex">
+                        <span class="w-50">Total Discount</span>
+                        <span class="flex-grow-1 text-end"><t t-esc="props.formatCurrency(props.data.total_discount)" /></span>
+                    </div>
+                    <!-- <div class="d-flex" style="width: 82%;">
+                        <span class="w-50">VAT Exempt Sales</span>
+                        <span class="flex-grow-1 text-end"><t t-esc="props.formatCurrency(props.data.total_vat_exemption)" /></span>
+                    </div> -->
+
+                </div>
+
+
+            </div>
+        </xpath>
+
+<xpath expr="//div[@t-if='props.data.footer']" position="before">
+
+    <div class="footer_customer" style="margin-top:10px; width:85%; margin:auto; font-size:12px;">
+
+        <table style="width:100%; border-collapse:collapse;">
+
+            <tr>
+                <td style="width:38%; text-align:right;">Customer</td>
+                <td style="width:5%; text-align:left;">:</td>
+                <td style="border-bottom:1px solid black;">
+                    <t t-esc="props.data.partner_name or ''"/>
+                </td>
+            </tr>
+
+            <tr>
+    <td style="text-align:right;">
+        <t t-if="props.data.discount_code">
+            <t t-esc="props.data.discount_code"/> ID Number
+        </t>
+        <t t-else="">
+            ID Number
+        </t>
+    </td>
+
+    <td style="text-align:left;">:</td>
+
+    <td style="border-bottom:1px solid black;">
+        <t t-esc="props.data.partner_id or ''"/>
+    </td>
+</tr>
+
+<!--            <tr>-->
+<!--                <td style="text-align:right;">ID Number</td>-->
+<!--                <td style="text-align:left;">:</td>-->
+<!--                <td style="border-bottom:1px solid black;">-->
+<!--                    <t t-esc="props.data.partner_id or ''"/>-->
+<!--                </td>-->
+<!--            </tr>-->
+
+            <tr>
+                <td style="text-align:right;">Address</td>
+                <td style="text-align:left;">:</td>
+                <td style="border-bottom:1px solid black;">
+                    <t t-esc="props.data.partner_address or ''"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="text-align:right;">TIN</td>
+                <td style="text-align:left;">:</td>
+                <td style="border-bottom:1px solid black;">
+                    <t t-esc="props.data.partner_tin or ''"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="text-align:right;">Business Style</td>
+                <td style="text-align:left;">:</td>
+                <td style="border-bottom:1px solid black;">
+                    <t t-esc="props.data.res_partner_business_style or ''"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="text-align:right;">Signature</td>
+                <td style="text-align:left;">:</td>
+                <td style="border-bottom:1px solid black; height:14px;"></td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</xpath>
+        <xpath expr="//div[hasclass('after-footer')]" position="replace">
+            <div t-if="props.data.is_refund_order" class="text-center mb-1 fw-bolder">
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@t-esc='props.data.name']" position="replace"/>
+
+
+        <xpath expr="//div[@t-esc='props.data.date']" position="replace"/>
+
+
+        <xpath expr="//t[@t-if='props.data.total_discount']" position="replace"/>
+    </t>
+    <t t-name="pos_sc_pwd_hmrc.ReceiptHeader" t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pos-receipt-contact')]/div[@t-if='props.data.company.partner_id?.[1]']"
+               position="replace"/>
+
+        <xpath expr="//div[hasclass('pos-receipt-contact')]/t[@t-if='props.data.company.phone']" position="replace"/>
+
+        <xpath expr="//div[hasclass('pos-receipt-contact')]/t[@t-if='props.data.company.vat']" position="replace"/>
+
+        <xpath expr="//div[hasclass('pos-receipt-contact')]/div[@t-if='props.data.company.email']" position="replace"/>
+
+        <xpath expr="//div[hasclass('pos-receipt-contact')]/div[@t-if='props.data.company.website']"
+               position="replace"/>
+
+        <xpath expr="//div[hasclass('pos-receipt-contact')]/div[@t-if='props.data.header']" position="replace">
+            <div t-if="props.data.header" style="white-space:pre-line">
+                <t t-esc="props.data.header"/>
+            </div>
+        </xpath>
+
+
+        <xpath expr="//div[hasclass('cashier')]" position="before">
+
+            <div t-if="props.data.min_no!=''">
+                MIN: <t t-esc="props.data.min_no"/>
+            </div>
+            <div t-if="props.data.min_no!=''">
+                S/N: <t t-esc="props.data.x_sr_no"/>
+            </div>
+            <br/>
+            <div t-if="props.data.transaction_number or props.order?.transaction_number">
+                Transaction No.:
+                <t t-esc="props.data.transaction_number or props.order?.transaction_number"/>
+            </div>
+<!--            <t t-if="props.data.is_mixed_sale">MIXED SALE</t>-->
+            <div t-if="props.data.is_zero_exemption_vat" class="text-center mb-1 fw-bolder">
+                <t t-if="props.data.is_zero_exemption_vat and props.data.footer_text">
+                    <t t-esc="props.data.footer_text"/>
+                </t>
+                <t t-else="">
+                    <t t-if="props.data.is_zero_exemption_vat=='zero_rated'">ZERO-RATED SALE</t>
+                    <t t-if="props.data.is_zero_exemption_vat=='vat_exempt'">
+                        VAT-EXEMPT SALE
+                    </t>
+                </t>
+
+            </div>
+
+
+
+            <!--            <div class="order-ref-custom">-->
+            <!--                <t t-if="props.data.is_refund_order">-->
+            <!--                    Date:-->
+            <!--                    <t t-esc="props.data.date.toFormat('MM-dd-yyyy HH:mm:ss')"/>-->
+            <!--                </t>-->
+            <!--            </div>-->
+
+            <div class="order-ref-custom">
+                <t t-if="props.data.void_invoice_number">
+                    Void Invoice No.: <t t-esc="props.data.invoice_number"/>
+                </t>
+                    <t t-elif="props.data.return_invoice_number">
+                    Return Invoice No.: <t t-esc="props.data.invoice_number"/>
+                </t>
+            </div>
+
+            <!-- If refund / void / return  show only Date -->
+            <t t-if="props.data.is_refund_order or props.data.void_invoice_number or props.data.return_invoice_number">
+                <div id="order-date">
+                    Date:
+                    <t t-esc="props.data.date.toFormat('MM-dd-yyyy HH:mm:ss')"/>
+                </div>
+            </t>
+
+            <!-- Normal order  show Order Date -->
+            <t t-else="">
+                <div id="order-date">
+                    Order Date:
+                    <t t-esc="props.data.ref_order_date or props.data.date.toFormat('MM-dd-yyyy HH:mm:ss')"/>
+                </div>
+            </t>
+            <div class="order-ref-custom">
+
+                 <t t-if="props.data.return_invoice_number or props.data.void_invoice_number or props.data.is_refund_order">
+                     Ref. Sales Invoice No.: <t t-esc="props.data.original_inv_ref"/>
+                 </t>
+                <t t-else="">
+                    Sales Invoice No.: <t t-esc="props.data.invoice_number"/>
+                </t>
+            </div>
+            <t t-if="props.data.is_reprint_order">
+                <div class="fw-bolder my-1">
+                    REPRINT / DUPLICATE COPY
+                    </div>
+                <div class="fw-bolder">
+                    <t t-esc="props.data.reprint_datetime"/>
+                    </div>
+
+                </t>
+            <div t-if="props.data.is_refund_order" class="disclamer_text text-center mb-1 fw-bolder">
+                "THIS DOCUMENT IS NOT VALID FOR CLAIMING INPUT TAX"
+                </div>
+
+
+        </xpath>
+
+
+        <xpath expr="//div[@class='pos-receipt-contact']/following-sibling::br[1]" position="replace"/>
+
+        <xpath expr="//img[hasclass('pos-receipt-logo')]" position="replace">
+            <div t-if="!props.data.hide_company_logo" class="pos-receipt-logo">
+                <img t-attf-src="/web/image?model=res.company&amp;id={{props.data.company.id}}&amp;field=logo"
+                     alt="Logo" class="pos-receipt-logo"/>
+            </div>
+        </xpath>
+<!--        remove from report-->
+        <xpath expr="//div[@t-if='props.data.trackingNumber and !props.data.bigTrackingNumber']" position="replace"/>
+        <xpath expr="//div[hasclass('cashier')]" position="replace"/>
+        <xpath expr="//div[hasclass('sh_customer_name')]" position="replace"/>
+        <xpath expr="//div[hasclass('sh_pos_vat')]" position="replace"/>
+
+
+    </t>
+    <!-- <t t-name="pos_sc_pwd_hmrc.ReceiptHeader" t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pos-receipt-contact')]" position="inside">
+            <t t-if="props.data.partner and props.data.partner.is_senior_person">
+                <div class="w-100 d-flex flex-column align-items-start mt-2" style="margin-right: 10px;">
+                    <div class="fw-bolder d-flex" style="min-width: 50%;">CASH SALES - SENIOR CITIZEN</div>
+                    <div class="fw-bolder d-flex" style="min-width: 50%;">Customer: <t t-esc="props.data.partner.name" /></div>
+                </div>
+            </t>
+        </xpath>
+    </t> -->
+
+</templates>

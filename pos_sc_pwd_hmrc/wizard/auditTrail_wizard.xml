@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_pos_audit_trail_wizard" model="ir.ui.view">
+        <field name="name">pos.audit.trail.wizard.form</field>
+        <field name="model">pos.audit.trail.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Audit Trail">
+                <group>
+                    <group string="Date Range" col="2">
+                        <label for="date_from" string="Period"/>
+                        <div class="o_row">
+                            <field name="date_from"
+                                   widget="daterange"
+                                   class="oe_inline"
+                                   options="{'related_end_date': 'date_to'}"/>
+                            <span class="mx-2">to</span>
+                            <field name="date_to"
+                                   widget="daterange"
+                                   class="oe_inline"
+                                   options="{'related_start_date': 'date_from'}"/>
+                        </div>
+                    </group>
+                    <group string="POS Configuration">
+                        <field name="pos_config_id"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="session_ids" widget="many2many_tags" domain="[('config_id','=',pos_config_id)]"/>
+                </group>
+
+                <footer>
+                    <button
+                            name="action_generate_txt"
+                            string="Generate"
+                            type="object"
+                            class="btn-primary"/>
+                    <button
+                            string="Cancel"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

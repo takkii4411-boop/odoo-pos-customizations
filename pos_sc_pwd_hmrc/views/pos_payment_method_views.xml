@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_payment_method_view_form_inherit_hmrc" model="ir.ui.view">
+        <field name="name">pos.payment.method.form.inherit.hmrc</field>
+        <field name="model">pos.payment.method</field>
+        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="is_deferred_payment"/>
+                <field name="payment_days" invisible="not is_deferred_payment" required="is_deferred_payment"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

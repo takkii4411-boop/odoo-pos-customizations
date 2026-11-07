@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_pos_special_discount_tree" model="ir.ui.view">
+        <field name="name">pos.special.discount.tree</field>
+        <field name="model">pos.special.discount</field>
+        <field name="arch" type="xml">
+            <tree string="Special Discounts">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="discount_code_on_receipt"/>
+                <field name="button_name"/>
+                <field name="discount_rate"/>
+                <field name="vat_treatment"/>
+                <field name="fiscal_position_id"/>
+                <field name="is_enabled" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_pos_special_discount_form" model="ir.ui.view">
+        <field name="name">pos.special.discount.form</field>
+        <field name="model">pos.special.discount</field>
+        <field name="arch" type="xml">
+            <form string="Special Discount">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <widget name="web_ribbon" title="Disabled" bg_color="text-bg-danger"
+                                invisible="is_enabled"/>
+                    </div>
+
+                    <group>
+                        <group name="basic_info" string="Basic Information">
+                            <field name="is_default_discount" invisible="1"/>
+                            <field name="name" placeholder="e.g., Senior Citizen Discount"/>
+                            <field name="discount_code_on_receipt"/>
+                            <field name="discount_code"
+                                   placeholder="e.g., senior, pwd, naac"
+                                   readonly="id != False"/>
+                            <field name="button_name" placeholder="e.g., SC, PWD, NAAC"/>
+                            <field name="is_enabled"/>
+                        </group>
+
+                        <group name="config" string="Discount Configuration">
+                            <field name="discount_rate"/>
+                            <field name="vat_treatment"/>
+                            <field name="fiscal_position_id"/>
+                            <field name="on_line_text"
+                                   placeholder="e.g., Less 20% SC Discount"/>
+                            <field name="sequence"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <field name="company_id" invisible="1"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Help" name="help">
+                            <div class="o_row">
+                                <div class="o_col-12">
+                                    <div class="alert alert-info" role="alert">
+                                        <h4>Configuration Guide:</h4>
+                                        <ul>
+                                            <li><strong>Discount Code:</strong> Must be unique, no spaces (used internally)</li>
+                                            <li><strong>Button Name:</strong> Short text shown on POS button (max 10 chars recommended)</li>
+                                            <li><strong>Discount Rate:</strong> Fixed percentage (e.g., 20 = 20%)</li>
+                                            <li><strong>Fiscal Position:</strong> Link to determine VAT treatment (Exempt/Zero-Rated/Neither)</li>
+                                            <li><strong>On Line Text:</strong> Appears on receipt for each discounted item</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_pos_special_discount" model="ir.actions.act_window">
+        <field name="name">Special Discounts</field>
+        <field name="res_model">pos.special.discount</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first special discount configuration
+            </p>
+            <p>
+                Define discount types like Senior Citizen, PWD, NAAC, etc.<br/>
+                These will appear as buttons in the POS interface.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem
+        id="menu_pos_special_discount"
+        name="Special Discounts"
+        parent="point_of_sale.menu_point_config_product"
+        action="action_pos_special_discount"
+        sequence="20"/>
+</odoo>

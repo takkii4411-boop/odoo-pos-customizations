@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_sc_pwd_hmrc.SpecialDiscountButtons">
+        <t t-if="shouldShowButtons and discountConfigs.length > 0">
+            <div class="special-discount-buttons d-flex flex-wrap gap-2 p-2 bg-300 border-top">
+                <t t-foreach="discountConfigs" t-as="config" t-key="config.id">
+                    <t t-if="shouldShowDiscountButton(config)">
+                        <button t-att-class="getButtonClass(config)"
+                                t-on-click="() => this.toggleDiscountMode(config)"
+                                t-att-title="config.name"
+                                t-att-disabled="!isButtonEnabled(config) ? 'disabled' : false">
+                            <i class="fa fa-percent me-2"></i>
+                            <span t-esc="config.button_name"/>
+                        </button>
+                    </t>
+                </t>
+            </div>
+        </t>
+    </t>
+
+</templates>

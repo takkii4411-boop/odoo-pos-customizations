@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="view_pos_pos_form_inherit_hmrc" model="ir.ui.view">
+        <field name="name">hmrc.order.type.form.inherit</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_refund_orders']/field[@name='refund_orders_count']"
+                   position="attributes">
+                <attribute name="string">Refund Void</attribute>
+            </xpath>
+            <field name="name" position="after">
+                <field name="invoice_number" readonly='1'/>
+                <field name="transaction_number" readonly='1'/>
+                <field name="return_invoice_number" readonly='1' invisible="not return_invoice_number"/>
+                <field name="void_invoice_number" readonly='1' invisible="not void_invoice_number"/>
+            </field>
+            <xpath expr="//field[@name='old_pos_reference']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='is_exchange_order']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='notes']" position="after">
+                <page string="Deferred Payment" name="deferred_payment">
+                    <field name="deferred_payment_ids">
+                        <tree string="Deferred Payments" delete="1" edit="0">
+                            <field name="payment_method_id"/>
+                            <field name="due_date"/>
+                            <field name="amount" widget="monetary"/>
+                            <field name="currency_id" invisible="1"/>
+                            <!-- <field name="state" widget="badge"/> -->
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="deferred_form_view" model="ir.ui.view">
+        <field name="name">Deferred Payment Form</field>
+        <field name="model">deferred.payment</field>
+        <field name="arch" type="xml">
+            <form string="Deferred Payment">
+                <!-- <header>
+                    <field name="state" widget="statusbar"/>
+                </header> -->
+                <sheet>
+                    <group>
+                        <field name="payment_method_id"/>
+                        <field name="due_date"/>
+                        <field name="amount" widget="monetary"/>
+                    </group>
+                </sheet>
+                <!-- <footer> -->
+                    <!-- <button string="Create Payment" name="action_create_payments" type="object" class="oe_highlight" data-hotkey="q" invisible="state != 'draft'"/> -->
+                    <!-- <button string="Create Payment" special="save" class="btn-primary"/>
+                    <button string="Cancel Payment" name="action_cancel_payments" type="object" class="oe_highlight" data-hotkey="q" invisible="state != 'paid'"/>
+                    <button string="Discard" class="btn btn-secondary" special="cancel" data-hotkey="x"/> -->
+                <!-- </footer> -->
+            </form>
+        </field>
+    </record>
+
+</odoo>

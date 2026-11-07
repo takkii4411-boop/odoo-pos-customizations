@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Senior Citizen Discount -->
+        <record id="discount_senior_citizen" model="pos.special.discount">
+            <field name="name">Senior Citizen Discount</field>
+            <field name="discount_code">senior</field>
+            <field name="button_name">SC</field>
+            <field name="discount_rate">20.0</field>
+            <field name="vat_treatment">vat_exempt</field>
+            <field name="on_line_text">Less 20% SC Discount</field>
+            <field name="sequence">10</field>
+            <field name="is_enabled">True</field>
+            <field name="is_default_discount">True</field>
+        </record>
+
+        <!-- PWD Discount -->
+        <record id="discount_pwd" model="pos.special.discount">
+            <field name="name">PWD Discount</field>
+            <field name="discount_code">pwd</field>
+            <field name="button_name">PWD</field>
+            <field name="discount_rate">20.0</field>
+            <field name="vat_treatment">vat_exempt</field>
+            <field name="on_line_text">Less 20% PWD Discount</field>
+            <field name="sequence">20</field>
+            <field name="is_enabled">True</field>
+            <field name="is_default_discount">True</field>
+        </record>
+
+        <!-- NAAC (PNSTM) Discount -->
+        <record id="discount_naac" model="pos.special.discount">
+            <field name="name">NAAC (PNSTM) Discount</field>
+            <field name="discount_code">naac</field>
+            <field name="button_name">NAAC</field>
+            <field name="discount_rate">20.0</field>
+            <field name="vat_treatment">vat_inclusive_reapply</field>
+            <field name="on_line_text">Less 20% NAAC Discount</field>
+            <field name="sequence">30</field>
+            <field name="is_enabled">True</field>
+            <field name="is_default_discount">True</field>
+        </record>
+
+        <!-- Solo Parent (SPIC) Discount -->
+        <record id="discount_spic" model="pos.special.discount">
+            <field name="name">Solo Parent (SPIC) Discount</field>
+            <field name="discount_code">spic</field>
+            <field name="button_name">SPIC</field>
+            <field name="discount_rate">10.0</field>
+            <field name="vat_treatment">vat_exempt</field>
+            <field name="on_line_text">Less 10% Solo Parent Discount</field>
+            <field name="sequence">40</field>
+            <field name="is_enabled">True</field>
+            <field name="is_default_discount">True</field>
+        </record>
+
+        <!-- Medal of Valor Discount -->
+        <record id="discount_medal" model="pos.special.discount">
+            <field name="name">Medal of Valor Discount</field>
+            <field name="discount_code">medal</field>
+            <field name="button_name">MEDAL</field>
+            <field name="discount_rate">20.0</field>
+            <field name="vat_treatment">vat_exempt</field>
+            <field name="on_line_text">Less 20% Medal Discount</field>
+            <field name="sequence">50</field>
+            <field name="is_enabled">True</field>
+            <field name="is_default_discount">True</field>
+        </record>
+
+        <!-- Basic Necessity (BNPC) Discount -->
+        <record id="discount_bnpc" model="pos.special.discount">
+            <field name="name">Basic Necessity (BNPC) Discount</field>
+            <field name="discount_code">bnpc</field>
+            <field name="button_name">BNPC</field>
+            <field name="discount_rate">5.0</field>
+            <field name="vat_treatment">vat_inclusive_reapply</field>
+            <field name="on_line_text">Less 5% BNPC Discount</field>
+            <field name="sequence">60</field>
+            <field name="is_enabled">True</field>
+            <field name="is_default_discount">True</field>
+        </record>
+
+    </data>
+</odoo>

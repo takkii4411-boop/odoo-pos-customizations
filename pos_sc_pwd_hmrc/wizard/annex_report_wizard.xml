@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Alternative: Standalone Wizard Form (if not inheriting) -->
+    <record id="view_annex_report_wizard_form_standalone" model="ir.ui.view">
+        <field name="name">pos.annex.wizard.form.standalone</field>
+        <field name="model">pos.annex.wizard</field>
+        <field name="arch" type="xml">
+            <form string="E-Journal Report">
+                <sheet>
+                    <group>
+                        <group string="Date Range" col="2">
+                            <label for="date_from" string="Period"/>
+                            <div class="o_row">
+                                <field name="date_from"
+                                       widget="daterange"
+                                       class="oe_inline"
+                                       options="{'related_end_date': 'date_to'}"/>
+                                <span class="mx-2">to</span>
+                                <field name="date_to"
+                                       widget="daterange"
+                                       class="oe_inline"
+                                       options="{'related_start_date': 'date_from'}"/>
+                            </div>
+                        </group>
+                        <group string="POS Configuration">
+                            <field name="pos_id"
+                                   options="{'no_create': True, 'no_open': True}"
+                                   placeholder="Select POS Configuration..."
+                                   required="1"/>
+                        </group>
+                    </group>
+
+                    <group string="Report Type (E-1 to E-5)">
+                        <field name="report_type"
+                               options="{'no_create': True, 'no_open': True}"
+                               placeholder="Select POS Report Type (E-1 to E-5)..."
+                               required="1"/>
+                    </group>
+
+                    <!--                    <group>-->
+                    <!--                        <group string="Report Options">-->
+                    <!--                            <field name="registerID" widget="boolean_toggle"/>-->
+                    <!--                            <field name="preview_mode_on" widget="boolean_toggle"/>-->
+                    <!--                        </group>-->
+                    <!--                    </group>-->
+                </sheet>
+                <footer>
+                    <button string="Generate Report"
+                            name="action_generate_report"
+                            type="object"
+                            class="btn-primary"
+                            data-hotkey="q"/>
+<!--                    <button string="Preview"-->
+<!--                            name="action_preview_report"-->
+<!--                            type="object"-->
+<!--                            class="btn-secondary"-->
+<!--                            invisible="[('preview_mode_on', '=', False)]"-->
+<!--                            data-hotkey="w"/>-->
+                    <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"
+                            data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
