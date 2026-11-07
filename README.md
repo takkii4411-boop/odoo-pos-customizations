@@ -2,7 +2,7 @@
 
 ![Odoo](https://img.shields.io/badge/Odoo-17.0-purple) ![Modules](https://img.shields.io/badge/Custom%20Modules-2-blue) ![License](https://img.shields.io/badge/License-LGPL--3-green)
 
-Two advanced **POS extensions**:
+Two advanced **POS extensions** built as **modifications & feature additions** on the existing Odoo 17 POS (base: Softhealer `sh_pos_all_in_one_retail` retail suite):
 
 1. **Pos SC/PWD HMRC** — a statutory **Senior Citizen / Person With Disability (SC/PWD) discount engine** with VAT-net discount calculation, session login, audit trail, e-journal and a stack of POS reports.
 2. **Pos Voice Agent** — a voice-driven POS assistant: **wake-word detection** plus **fuzzy product search** (rapidfuzz) to add products by speaking.
